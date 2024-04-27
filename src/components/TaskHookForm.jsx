@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
-import * as Yup from "yup";
-import { useForm } from "react-hook-form";
-
+import React, { useState, useEffect } from 'react';
+import { nanoid } from 'nanoid';
+import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 const formSemasi = Yup.object().shape({
   title: Yup.string()
-    .required("Task başlığı yazmalısınız")
-    .min(3, "Task başlığı en az 3 karakter olmalı"),
+    .required('Task başlığı yazmalısınız')
+    .min(3, 'Task başlığı en az 3 karakter olmalı'),
   description: Yup.string()
-    .required("Task açıklaması yazmalısınız")
-    .min(10, "Task açıklaması en az 10 karakter olmalı"),
+    .required('Task açıklaması yazmalısınız')
+    .min(10, 'Task açıklaması en az 10 karakter olmalı'),
   people: Yup.array()
-    .max(3, "En fazla 3 kişi seçebilirsiniz")
-    .min(1, "Lütfen en az bir kişi seçin"),
+    .max(3, 'En fazla 3 kişi seçebilirsiniz')
+    .min(1, 'Lütfen en az bir kişi seçin'),
 });
 
-export default function TaskHookForm ({ kisiler, submitFn }){
-  const {register,handleSubmit}=useForm();
+export default function TaskHookForm({ kisiler, submitFn }) {
+  const { register, handleSubmit } = useForm();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     people: [],
   });
 
   // yup error stateleri
   const [formErrors, setFormErrors] = useState({
-    title: "",
-    description: "",
-    people: "",
+    title: '',
+    description: '',
+    people: '',
   });
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -44,7 +44,7 @@ export default function TaskHookForm ({ kisiler, submitFn }){
       .then(() => {
         setFormErrors({
           ...formErrors,
-          [name]: "",
+          [name]: '',
         });
       })
       .catch((err) => {
@@ -65,13 +65,17 @@ export default function TaskHookForm ({ kisiler, submitFn }){
       yeniPeople.splice(index, 1);
     } else {
       yeniPeople.push(value);
+
+      toast.success('Yeni kişi oluşturuldu.');
     }
 
-    formAlaniniKontrolEt("people", yeniPeople);
+    formAlaniniKontrolEt('people', yeniPeople);
     setFormData({
       ...formData,
       people: yeniPeople,
     });
+
+    toast.success('Yeni görev oluşturuldu.');
   }
 
   // diğer form alanları değiştikçe çalışan ve yeni değeri state'e ekleyen fonksiyon
@@ -87,7 +91,7 @@ export default function TaskHookForm ({ kisiler, submitFn }){
   // task ekleme
   function handleSubmitHandler(data) {
     console.log(data);
-  /*
+    /*
     e.preventDefault();
     submitFn({
       ...formData,
@@ -96,8 +100,8 @@ export default function TaskHookForm ({ kisiler, submitFn }){
     });
     */
     setFormData({
-      title: "",
-      description: "",
+      title: '',
+      description: '',
       people: [],
     });
   }
@@ -111,7 +115,7 @@ export default function TaskHookForm ({ kisiler, submitFn }){
         <input
           className="input-text"
           id="title"
-          {...register("title")}
+          {...register('title')}
           type="text"
           onChange={handleOthersChange}
           value={formData.title}
@@ -127,7 +131,7 @@ export default function TaskHookForm ({ kisiler, submitFn }){
           className="input-textarea"
           rows="3"
           id="description"
-          {...register("description")}
+          {...register('description')}
           onChange={handleOthersChange}
           value={formData.description}
         ></textarea>
@@ -141,7 +145,7 @@ export default function TaskHookForm ({ kisiler, submitFn }){
             <label className="input-checkbox" key={p}>
               <input
                 type="checkbox"
-                {...register("people")}
+                {...register('people')}
                 value={p}
                 onChange={handleCheckboxChange}
                 checked={formData.people.includes(p)}
@@ -164,4 +168,4 @@ export default function TaskHookForm ({ kisiler, submitFn }){
       </div>
     </form>
   );
-};
+}

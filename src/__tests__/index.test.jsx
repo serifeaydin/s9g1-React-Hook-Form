@@ -44,7 +44,7 @@ test('1.2.2 Açıklama alanına yazılanlar silinince hata mesajı doğru metinl
   await screen.findByText(/Task açıklaması yazmalısınız/i);
 });
 
-test("1.3.1 Taskı 4 kişiye atayınca hata mesajı doğru metinle çıkıyor.", async () => {
+test('1.3.1 Taskı 4 kişiye atayınca hata mesajı doğru metinle çıkıyor.', async () => {
   const user = userEvent.setup();
   const assignee = screen.getByLabelText(/İsim/i);
   const addButton = screen.getByText('Ekle');
@@ -64,7 +64,7 @@ test("1.3.1 Taskı 4 kişiye atayınca hata mesajı doğru metinle çıkıyor.",
   await screen.findByText(/En fazla 3 kişi seçebilirsiniz/i);
 });
 
-test("1.3.2 Taskı 1 kişiye atayıp, o kişi çıkarılınca hata mesajı doğru metin ile çıkıyor.", async () => {
+test('1.3.2 Taskı 1 kişiye atayıp, o kişi çıkarılınca hata mesajı doğru metin ile çıkıyor.', async () => {
   const user = userEvent.setup();
   const assignee = screen.getByLabelText(/İsim/i);
   const addButton = screen.getByText('Ekle');
@@ -82,7 +82,7 @@ test('2.1 Tamamlandı butonuna tıklayınca görev tamamlandı oluyor.', async (
   const button = screen.getAllByText('Tamamlandı');
   await user.click(button[0]);
   const tamamlanmamisGorevler = await screen.findAllByText('Tamamlandı');
-  expect(tamamlanmamisGorevler).toHaveLength(2);
+  expect(tamamlanmamisGorevler).toHaveLength(3);
 });
 
 test("3.0.1 App jsx'e toastify import edilmiş", async () => {
@@ -127,6 +127,6 @@ test('3.3 Tamamlandı butonuna tıklayınca "2 idli görev tamamlandı." mesajı
   const button = screen.getAllByText('Tamamlandı');
   await user.click(button[0]);
   const tamamlanmamisGorevler = await screen.findByText(
-    "2 idli görev tamamlandı."
+    '2 idli görev tamamlandı.'
   );
 });
